@@ -23,7 +23,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: auto; }
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
@@ -216,21 +216,40 @@ h3 {
 
 .hamburger {
   display: none;
-  flex-direction: column;
-  gap: 5px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px 10px;
   margin-left: auto;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
-.hamburger span {
+
+.hamburger-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-bars span {
   display: block;
-  width: 24px;
+  width: 22px;
   height: 2px;
   background: var(--white);
   border-radius: 2px;
   transition: all var(--transition);
+}
+
+.hamburger-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 /* ============================================================
@@ -382,10 +401,19 @@ h3 {
   font-style: normal;
 }
 
+/* Hero CTA button row */
+.hero-cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+
 /* Hero CTA button — big, gold, uppercase */
 .btn-hero-cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background: var(--gold);
   color: var(--dark);
@@ -394,19 +422,34 @@ h3 {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 18px 40px;
+  padding: 18px 36px;
   border-radius: 6px;
-  border: none;
+  border: 2px solid var(--gold);
   cursor: pointer;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
   box-shadow: 0 4px 28px rgba(201,151,44,0.5);
-  margin-bottom: 44px;
 }
 
 .btn-hero-cta:hover {
   background: var(--gold-dark);
+  border-color: var(--gold-dark);
   transform: translateY(-3px);
   box-shadow: 0 8px 40px rgba(201,151,44,0.6);
+}
+
+/* Secondary call button */
+.btn-hero-cta--call {
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(255,255,255,0.55);
+  box-shadow: none;
+}
+
+.btn-hero-cta--call:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--white);
+  box-shadow: none;
+  transform: translateY(-3px);
 }
 
 /* Trust badge strip at the bottom of hero content */
@@ -1897,13 +1940,16 @@ h3 {
   .nav.open { transform: translateY(0); opacity: 1; }
   .nav a { font-size: 1rem; padding: 14px 16px; border-radius: 6px; }
 
-  /* Hero: no gold panel, full-width dark */
+  /* Hero: no gold panel, background photo more visible */
   .hero { padding-top: 72px; }
   .hero-gold-panel { display: none; }
-  .hero-dark-overlay { background: rgba(10,10,10,0.88); }
+  .hero-bg-img { opacity: 0.35; }
+  .hero-dark-overlay { background: rgba(10,10,10,0.76); }
   .hero-content { margin-left: 0; padding: 48px 18px 72px; max-width: 100%; }
   .hero-headline { font-size: clamp(1.7rem, 7vw, 2.6rem); }
   .hero-bullets { grid-template-columns: 1fr; gap: 12px; }
+  .hero-cta-row { flex-direction: row; }
+  .hero-cta-row .btn-hero-cta { flex: 1; padding: 16px 18px; font-size: 0.88rem; }
   .hero-trust { flex-wrap: wrap; gap: 8px; }
   .trust-badge {
     border-right: 1px solid rgba(201,151,44,0.35) !important;
@@ -1927,9 +1973,15 @@ h3 {
     height: 240px;
   }
 
-  /* Values */
-  .values-grid { grid-template-columns: 1fr; }
-  .value-card { border-right: none; }
+  /* Values: stacked bordered cards like Haro mobile */
+  .values-grid { grid-template-columns: 1fr; padding: 16px; gap: 12px; }
+  .value-card {
+    border-right: none;
+    border-radius: var(--radius);
+    border: 1px solid rgba(201,151,44,0.2);
+    border-top: 3px solid var(--gold);
+    padding: 24px 20px;
+  }
 
   /* Before/After */
   .ba-stats { grid-template-columns: repeat(3, 1fr); }
@@ -1981,7 +2033,8 @@ h3 {
   /* Hero */
   .hero-content { padding: 36px 16px 56px; }
   .hero-headline { font-size: clamp(1.5rem, 8vw, 2.2rem); }
-  .btn-hero-cta { width: 100%; justify-content: center; font-size: 0.9rem; }
+  .hero-cta-row { flex-direction: column; }
+  .hero-cta-row .btn-hero-cta { width: 100%; font-size: 0.9rem; flex: none; }
   .hero-bullets li { font-size: 0.88rem; }
 
   /* Help section: single column cards */

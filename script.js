@@ -40,7 +40,7 @@
 
   // ---- Scroll reveal animation ----
   const revealTargets = document.querySelectorAll(
-    '.service-card, .coverage-item, .why-card, .realtor-card, .about-grid, .contact-grid'
+    '.coverage-item, .why-card, .why-split-card, .realtor-card, .value-card, .contact-grid'
   );
 
   const observer = new IntersectionObserver(function (entries) {
@@ -142,7 +142,9 @@
     requestAnimationFrame(step);
   }
 
-  var HEADER_H = document.getElementById('header').offsetHeight;
+  function getHeaderH() {
+    return document.getElementById('header').offsetHeight;
+  }
 
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
@@ -150,7 +152,7 @@
       var target = href === '#' ? document.body : document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      var top = target.getBoundingClientRect().top + window.pageYOffset - HEADER_H;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - getHeaderH();
       smoothScrollTo(Math.max(0, top), 900);
     });
   });
