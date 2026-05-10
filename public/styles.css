@@ -1873,7 +1873,6 @@ h3 {
 .gallery-section {
   background: var(--white);
   padding: 80px 0 72px;
-  overflow: hidden;
 }
 
 .gallery-title {
@@ -1885,63 +1884,67 @@ h3 {
   color: var(--dark);
   text-align: center;
   line-height: 1.1;
-  margin-bottom: 48px;
+  margin: 0 auto 48px;
   letter-spacing: -0.01em;
+  padding: 0 24px;
 }
 
-/* Mask edges with fade */
+/* Each slot = slide width + margin = 352px. 6 slots = 2112px */
+:root { --slide-w: 340px; --slide-gap: 12px; --slide-slot: 352px; }
+
 .gallery-track-wrap {
   overflow: hidden;
+  width: 100%;
   margin-bottom: 12px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image:         linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 
 .gallery-track-wrap:last-child { margin-bottom: 0; }
 
-/* The moving strip */
 .gallery-track {
   display: flex;
-  gap: 12px;
-  width: max-content;
+  flex-wrap: nowrap;
   will-change: transform;
 }
 
-.gallery-track--left  { animation: marquee-left  30s linear infinite; }
-.gallery-track--right { animation: marquee-right 30s linear infinite; }
+/* 6 slides × 352px = 2112px per set */
+.gallery-track--left  { animation: marquee-l 28s linear infinite; }
+.gallery-track--right { animation: marquee-r 28s linear infinite; }
 
 .gallery-track-wrap:hover .gallery-track { animation-play-state: paused; }
 
-@keyframes marquee-left {
+@keyframes marquee-l {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(calc(var(--slide-slot) * -6)); }
 }
 
-@keyframes marquee-right {
-  from { transform: translateX(-50%); }
+@keyframes marquee-r {
+  from { transform: translateX(calc(var(--slide-slot) * -6)); }
   to   { transform: translateX(0); }
 }
 
-/* Individual photo slides */
 .gallery-slide {
-  flex-shrink: 0;
-  width: 340px;
+  flex: 0 0 var(--slide-w);
   height: 260px;
-  border-radius: var(--radius);
+  margin-right: var(--slide-gap);
+  border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
+  background: #ddd;
 }
 
 .gallery-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   transition: transform 0.4s ease;
   pointer-events: none;
 }
 
-.gallery-slide:hover img { transform: scale(1.05); }
+.gallery-slide:hover img { transform: scale(1.06); }
 
 /* ============================================================
    RESPONSIVE
@@ -1967,7 +1970,8 @@ h3 {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .coverage-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-slide { width: 280px; height: 210px; }
+  .gallery-slide { flex: 0 0 280px; height: 210px; }
+  :root { --slide-w: 280px; --slide-slot: 292px; }
 
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
 
@@ -2113,9 +2117,9 @@ h3 {
   /* Coverage / Why */
   .coverage-grid { grid-template-columns: 1fr 1fr; }
   .why-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-title { font-size: clamp(1.5rem, 6vw, 2.2rem); margin-bottom: 32px; }
-  .gallery-slide { width: 220px; height: 170px; }
-  .gallery-track { gap: 8px; }
+  .gallery-title { font-size: clamp(1.4rem, 6vw, 2rem); margin-bottom: 32px; }
+  .gallery-slide { flex: 0 0 220px; height: 170px; margin-right: 10px; }
+  :root { --slide-w: 220px; --slide-gap: 10px; --slide-slot: 230px; }
 
   /* About */
   .about-highlights { grid-template-columns: 1fr; }
@@ -2170,9 +2174,9 @@ h3 {
   /* Coverage / Why */
   .coverage-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
-  .gallery-title { font-size: 1.5rem; }
-  .gallery-slide { width: 180px; height: 140px; border-radius: 6px; }
-  .gallery-track { gap: 6px; }
+  .gallery-title { font-size: 1.4rem; }
+  .gallery-slide { flex: 0 0 170px; height: 130px; margin-right: 8px; border-radius: 6px; }
+  :root { --slide-w: 170px; --slide-gap: 8px; --slide-slot: 178px; }
 
   /* Stats */
   .ba-stat-num { font-size: 1.8rem; }
