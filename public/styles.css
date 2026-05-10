@@ -23,7 +23,10 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* silky iOS inertia scroll */
+}
 
 body {
   font-family: var(--font-body);
@@ -31,6 +34,7 @@ body {
   background: var(--white);
   line-height: 1.7;
   overflow-x: hidden;
+  overscroll-behavior-y: none; /* prevent rubber-band bounce interfering */
 }
 
 img { max-width: 100%; display: block; }
@@ -132,8 +136,10 @@ h3 {
   z-index: 1000;
   background: rgba(15,15,15,0.97);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 2px solid rgba(201,151,44,0.25);
   transition: background var(--transition), box-shadow var(--transition);
+  will-change: transform; /* promote to its own GPU layer */
 }
 
 .header.scrolled {
@@ -1665,6 +1671,7 @@ h3 {
   font-family: var(--font-heading);
   font-size: 0.85rem;
   font-weight: 700;
+  will-change: transform; /* own GPU layer — no repaint on scroll */
   box-shadow: 0 6px 32px rgba(201,151,44,0.5);
   z-index: 999;
   opacity: 0;
@@ -1927,7 +1934,8 @@ h3 {
   .section { padding: 64px 0; }
   .container { padding: 0 18px; }
 
-  /* Header shrinks to 72px */
+  /* Header shrinks to 72px; drop blur for smooth GPU scrolling on mobile */
+  .header { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(15,15,15,0.99); }
   .header-inner { height: 72px; padding: 0 16px; gap: 10px; }
   .logo-img { height: 60px; }
   .hamburger { display: flex; }
