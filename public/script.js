@@ -57,29 +57,41 @@
     observer.observe(el);
   });
 
-  // ---- Contact form ----
+  // ---- Contact form — real API ----
   const form = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
 
   if (form) {
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-
       const btn = form.querySelector('button[type="submit"]');
       btn.textContent = 'Sending...';
       btn.disabled = true;
 
-      // Simulate async submission (replace with real endpoint)
-      setTimeout(function () {
-        form.reset();
-        formSuccess.classList.add('show');
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name:    form.name.value,
+            phone:   form.phone.value,
+            email:   form.email.value,
+            service: form.service.value,
+            message: form.message.value,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          form.reset();
+          formSuccess.classList.add('show');
+          setTimeout(function () { formSuccess.classList.remove('show'); }, 5000);
+        }
+      } catch (err) {
+        console.error('Form error:', err);
+      } finally {
         btn.textContent = 'Send Message →';
         btn.disabled = false;
-
-        setTimeout(function () {
-          formSuccess.classList.remove('show');
-        }, 5000);
-      }, 1200);
+      }
     });
   }
 

@@ -1,0 +1,22 @@
+{
+  "name": "pmk-remodeling-llc",
+  "version": "1.0.0",
+  "description": "PMK Remodeling LLC — official website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fahad-ummat/pmk.git"
+  },
+  "author": "PMK Remodeling LLC",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16"
+  }
+}

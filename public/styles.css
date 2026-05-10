@@ -1918,10 +1918,35 @@ h3 {
   .container { padding: 0 18px; }
 
   /* Header shrinks to 72px */
-  .header-inner { height: 72px; padding: 0 18px; gap: 12px; }
+  .header-inner { height: 72px; padding: 0 16px; gap: 10px; }
   .logo-img { height: 60px; }
-  .header-phone { font-size: 0.8rem; padding: 9px 12px; gap: 7px; }
   .hamburger { display: flex; }
+
+  /* Phone pill hidden at top; appears gold beside MENU on scroll */
+  .header-phone {
+    display: none;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    font-size: 0.78rem;
+    padding: 9px 14px;
+    gap: 7px;
+    background: var(--gold);
+    color: var(--dark);
+    box-shadow: none;
+  }
+  .header.scrolled .header-phone {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .header.scrolled .header-phone:hover {
+    background: var(--gold-dark);
+    color: var(--white);
+    transform: translateY(0);
+  }
 
   /* Nav dropdown anchored below 72px header */
   .nav {
@@ -2019,16 +2044,16 @@ h3 {
   .section { padding: 52px 0; }
   .container { padding: 0 16px; }
 
-  /* Header phone: icon only */
+  /* Header phone: icon + CALL text only on small screens */
   .header-inner { gap: 8px; }
-  .header-phone {
+  .header.scrolled .header-phone {
     font-size: 0;
-    padding: 10px;
+    padding: 10px 12px;
     gap: 0;
     min-width: 42px;
     justify-content: center;
   }
-  .header-phone svg { width: 20px; height: 20px; }
+  .header.scrolled .header-phone svg { width: 20px; height: 20px; }
 
   /* Hero */
   .hero-content { padding: 36px 16px 56px; }
