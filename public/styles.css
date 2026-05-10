@@ -271,25 +271,26 @@ h3 {
   background: #0f0f0f;
 }
 
-/* Dimmed house background photo (CSS bg so we can overlay it) */
+/* Van background photo */
 .hero-bg-img {
   position: absolute;
   inset: 0;
   background:
-    url('images/hero-bg.jpg') center center / cover no-repeat;
-  opacity: 0.18;
+    url('images/hero-van-bg.jpg') right center / cover no-repeat;
+  opacity: 0.55;
   z-index: 0;
 }
 
-/* Dark gradient overlay — heavier on the left */
+/* Dark gradient overlay — heavy left (text readable), fades right (van visible) */
 .hero-dark-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     105deg,
-    rgba(10,10,10,0.92) 0%,
-    rgba(10,10,10,0.78) 48%,
-    rgba(10,10,10,0.10) 100%
+    rgba(8,8,8,0.97) 0%,
+    rgba(8,8,8,0.88) 38%,
+    rgba(8,8,8,0.55) 65%,
+    rgba(8,8,8,0.20) 100%
   );
   z-index: 1;
 }
@@ -1986,8 +1987,8 @@ h3 {
   /* Hero: no gold panel, background photo more visible */
   .hero { padding-top: 72px; }
   .hero-gold-panel { display: none; }
-  .hero-bg-img { opacity: 0.35; }
-  .hero-dark-overlay { background: rgba(10,10,10,0.76); }
+  .hero-bg-img { opacity: 0.40; background-position: center center; }
+  .hero-dark-overlay { background: linear-gradient(180deg, rgba(8,8,8,0.90) 0%, rgba(8,8,8,0.80) 60%, rgba(8,8,8,0.70) 100%); }
   .hero-content { margin-left: 0; padding: 48px 18px 72px; max-width: 100%; }
   .hero-headline { font-size: clamp(1.7rem, 7vw, 2.6rem); }
   .hero-bullets { grid-template-columns: 1fr; gap: 12px; }
