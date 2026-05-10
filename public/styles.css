@@ -1868,68 +1868,80 @@ h3 {
 }
 
 /* ============================================================
-   GALLERY
+   GALLERY — Infinite marquee
    ============================================================ */
-.gallery-section { background: var(--dark); }
-.gallery-section .section-eyebrow { color: var(--gold); }
-.gallery-section h2 { color: var(--white); }
-.gallery-section .section-intro { color: rgba(255,255,255,0.55); }
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 300px 300px;
-  gap: 10px;
-  max-width: 1280px;
-  margin: 40px auto 0;
-  padding: 0 24px;
-}
-
-.gallery-item {
-  position: relative;
+.gallery-section {
+  background: var(--white);
+  padding: 80px 0 72px;
   overflow: hidden;
-  border-radius: var(--radius);
-  cursor: pointer;
-  background: #1a1a1a;
 }
 
-.gallery-item--tall { grid-row: span 2; }
+.gallery-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: var(--dark);
+  text-align: center;
+  line-height: 1.1;
+  margin-bottom: 48px;
+  letter-spacing: -0.01em;
+}
 
-.gallery-item img {
+/* Mask edges with fade */
+.gallery-track-wrap {
+  overflow: hidden;
+  margin-bottom: 12px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.gallery-track-wrap:last-child { margin-bottom: 0; }
+
+/* The moving strip */
+.gallery-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  will-change: transform;
+}
+
+.gallery-track--left  { animation: marquee-left  30s linear infinite; }
+.gallery-track--right { animation: marquee-right 30s linear infinite; }
+
+.gallery-track-wrap:hover .gallery-track { animation-play-state: paused; }
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Individual photo slides */
+.gallery-slide {
+  flex-shrink: 0;
+  width: 340px;
+  height: 260px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   display: block;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
+  pointer-events: none;
 }
 
-.gallery-item:hover img { transform: scale(1.07); }
-
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.1) 55%, transparent 100%);
-  display: flex;
-  align-items: flex-end;
-  padding: 20px 18px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.gallery-item:hover .gallery-overlay { opacity: 1; }
-
-.gallery-overlay span {
-  font-family: var(--font-heading);
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: var(--white);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 6px 14px;
-  background: var(--gold);
-  border-radius: 4px;
-}
+.gallery-slide:hover img { transform: scale(1.05); }
 
 /* ============================================================
    RESPONSIVE
@@ -1955,8 +1967,7 @@ h3 {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .coverage-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: 240px 240px 240px; }
-  .gallery-item--tall { grid-row: span 2; }
+  .gallery-slide { width: 280px; height: 210px; }
 
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
 
@@ -2102,9 +2113,9 @@ h3 {
   /* Coverage / Why */
   .coverage-grid { grid-template-columns: 1fr 1fr; }
   .why-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; padding: 0 18px; gap: 8px; }
-  /* Always show overlay labels on touch */
-  .gallery-overlay { opacity: 1; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%); }
+  .gallery-title { font-size: clamp(1.5rem, 6vw, 2.2rem); margin-bottom: 32px; }
+  .gallery-slide { width: 220px; height: 170px; }
+  .gallery-track { gap: 8px; }
 
   /* About */
   .about-highlights { grid-template-columns: 1fr; }
@@ -2159,9 +2170,9 @@ h3 {
   /* Coverage / Why */
   .coverage-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; padding: 0 16px; }
-  .gallery-item { height: 220px; }
-  .gallery-item--tall { grid-row: span 1; height: 220px; }
+  .gallery-title { font-size: 1.5rem; }
+  .gallery-slide { width: 180px; height: 140px; border-radius: 6px; }
+  .gallery-track { gap: 6px; }
 
   /* Stats */
   .ba-stat-num { font-size: 1.8rem; }
