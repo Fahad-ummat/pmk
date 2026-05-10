@@ -1448,6 +1448,16 @@ h3 {
 
 .contact-details { display: flex; flex-direction: column; gap: 20px; }
 
+.contact-map {
+  margin-top: 24px;
+  width: 100%;
+  height: 320px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+
 .contact-detail {
   display: flex;
   gap: 16px;
@@ -2033,6 +2043,7 @@ h3 {
   /* Contact */
   .form-row { grid-template-columns: 1fr; }
   .contact-form { padding: 28px 20px; }
+  .contact-map { height: 260px; margin-top: 20px; }
 
   /* Footer */
   .footer-inner { grid-template-columns: 1fr; gap: 32px; }
