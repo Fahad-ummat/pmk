@@ -1872,69 +1872,31 @@ h3 {
    ============================================================ */
 .gallery-section {
   background: var(--white);
-  padding: 80px 0 72px;
+  padding: 0;
+}
+
+.gallery-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.gallery-3-item {
+  overflow: hidden;
+  aspect-ratio: 4/3;
   position: relative;
 }
 
-.gallery-title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 900;
-  font-style: italic;
-  text-transform: uppercase;
-  color: var(--dark);
-  text-align: center;
-  line-height: 1.1;
-  margin: 0 auto 48px;
-  letter-spacing: -0.01em;
-  padding: 0 24px;
-  max-width: 100%;
-}
-
-.gallery-track-wrap {
-  overflow: hidden;
+.gallery-3-item img {
   width: 100%;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.gallery-track-wrap:last-child { margin-bottom: 0; }
-
-/* JS drives translateX — CSS just sets up the layout */
-.gallery-track {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  height: 260px;
-  will-change: transform;
-  /* width set via JS after measuring slides */
-}
-
-.gallery-slide {
-  flex-shrink: 0;
-  flex-grow: 0;
-  flex-basis: 340px;
-  width: 340px;
-  min-width: 340px;
-  height: 260px;
-  margin-right: 12px;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  background: #e0e0e0;
-}
-
-/* Override global img { max-width:100% } so portrait images don't break height */
-.gallery-slide img {
-  display: block;
-  width: 340px;
-  height: 260px;
-  max-width: none;
-  min-height: 0;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  pointer-events: none;
+  display: block;
+  transition: transform 0.5s ease;
 }
+
+.gallery-3-item:hover img { transform: scale(1.06); }
 
 .gallery-slide:hover img { transform: scale(1.06); }
 
@@ -1962,9 +1924,7 @@ h3 {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .coverage-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-track { height: 210px; }
-  .gallery-slide { flex-basis: 280px; width: 280px; min-width: 280px; height: 210px; }
-  .gallery-slide img { width: 280px; height: 210px; }
+  /* gallery: stays 3-col on tablet */
 
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
 
@@ -2110,10 +2070,7 @@ h3 {
   /* Coverage / Why */
   .coverage-grid { grid-template-columns: 1fr 1fr; }
   .why-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-title { font-size: clamp(1.4rem, 6vw, 2rem); margin-bottom: 32px; }
-  .gallery-track { height: 170px; }
-  .gallery-slide { flex-basis: 200px; width: 200px; min-width: 200px; height: 170px; margin-right: 10px; }
-  .gallery-slide img { width: 200px; height: 170px; }
+  /* gallery: 3-col on mobile landscape */
 
   /* About */
   .about-highlights { grid-template-columns: 1fr; }
@@ -2168,10 +2125,8 @@ h3 {
   /* Coverage / Why */
   .coverage-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
-  .gallery-title { font-size: 1.3rem; }
-  .gallery-track { height: 130px; }
-  .gallery-slide { flex-basis: 150px; width: 150px; min-width: 150px; height: 130px; margin-right: 8px; border-radius: 6px; }
-  .gallery-slide img { width: 150px; height: 130px; }
+  /* gallery: stack to 1 col on small phones */
+  .gallery-grid-3 { grid-template-columns: 1fr; }
 
   /* Stats */
   .ba-stat-num { font-size: 1.8rem; }
