@@ -1898,7 +1898,7 @@ h3 {
 
 .action-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 220px;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -1963,7 +1963,8 @@ h3 {
   .coverage-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   /* gallery: stays 3-col on tablet */
-  .action-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .action-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .action-img { height: 180px; }
 
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
 
@@ -2167,6 +2168,7 @@ h3 {
   /* gallery: stack to 1 col on small phones */
   .gallery-grid-3 { grid-template-columns: 1fr; }
   .action-grid { grid-template-columns: repeat(2, 1fr); }
+  .action-img { height: 140px; }
   .action-title { font-size: 1.3rem; margin-bottom: 24px; }
 
   /* Stats */
