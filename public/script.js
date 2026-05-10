@@ -141,4 +141,64 @@
     setPosition(slider.getBoundingClientRect().left + slider.offsetWidth * 0.5);
   })();
 
+  // ---- Gallery marquee (JS-driven for cross-browser reliability) ----
+  (function () {
+    var tracks = document.querySelectorAll('.gallery-track');
+    if (!tracks.length) return;
+
+    var SLIDE_W   = 340;
+    var SLIDE_GAP = 12;
+    var SLOT      = SLIDE_W + SLIDE_GAP;   // 352px
+    var SET_COUNT = 6;                      // 6 originals + 6 duplicates
+    var LOOP_W    = SLOT * SET_COUNT;       // 2112px = distance to loop
+
+    var speed  = 0.7;   // px per rAF frame  (~42px/s at 60fps)
+    var paused = false;
+
+    // Position state: left track starts at 0, right at -LOOP_W
+    var positions = [];
+    tracks.forEach(function (track, i) {
+      var isRight = track.classList.contains('gallery-track--right');
+      positions[i] = isRight ? -LOOP_W : 0;
+
+      // Set initial transform
+      track.style.transform = 'translateX(' + positions[i] + 'px)';
+
+      // Pause on hover
+      track.closest('.gallery-track-wrap').addEventListener('mouseenter', function () { paused = true; });
+      track.closest('.gallery-track-wrap').addEventListener('mouseleave', function () { paused = false; });
+    });
+
+    function tick() {
+      if (!paused) {
+        tracks.forEach(function (track, i) {
+          var isRight = track.classList.contains('gallery-track--right');
+          positions[i] += isRight ? speed : -speed;
+
+          // Loop seamlessly
+          if (!isRight && positions[i] <= -LOOP_W) positions[i] += LOOP_W;
+          if (isRight  && positions[i] >= 0)       positions[i] -= LOOP_W;
+
+          track.style.transform = 'translateX(' + positions[i] + 'px)';
+        });
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // Update slide/img dimensions from CSS (responsive)
+    function updateDimensions() {
+      var slide = document.querySelector('.gallery-slide');
+      if (!slide) return;
+      var w = slide.offsetWidth;
+      var g = parseInt(window.getComputedStyle(slide).marginRight) || 12;
+      SLOT   = w + g;
+      LOOP_W = SLOT * SET_COUNT;
+    }
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions, { passive: true });
+
+    requestAnimationFrame(tick);
+  })();
+
 })();
